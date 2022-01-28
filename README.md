@@ -2,6 +2,15 @@
 
 <img src="./screenshots/final.jpg" width="512px"> <img src="./screenshots/debug.jpg" width="512px">
 
+## Installation
+Download and Install [VulkanSDK](https://www.lunarg.com/vulkan-sdk/).
+
+Create a VS solution using Premake running: 
+```
+  premake5.exe vs2019
+```
+Compile and run the project. 😁
+
 ## About
 
 A Vulkan deferred rendering playground

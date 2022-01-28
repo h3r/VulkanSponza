@@ -406,7 +406,7 @@ void VulkanExampleBase::renderLoop()
 			if (!enableTextOverlay)
 			{
 				std::string windowTitle = getWindowTitle();
-				SetWindowText(window, windowTitle.c_str());
+				SetWindowTextA(window, windowTitle.c_str());
 			}
 			lastFPS = roundf(1.0f / frameTimer);
 			updateTextOverlay();
@@ -887,7 +887,8 @@ void VulkanExampleBase::setupConsole(std::string title)
 	AttachConsole(GetCurrentProcessId());
 	FILE *stream;
 	freopen_s(&stream, "CONOUT$", "w+", stdout);
-	SetConsoleTitle(TEXT(title.c_str()));
+	//SetConsoleTitle(TEXT(title.c_str()));
+	SetConsoleTitleA(title.c_str());
 }
 
 HWND VulkanExampleBase::setupWindow(HINSTANCE hinstance, WNDPROC wndproc)
@@ -903,9 +904,9 @@ HWND VulkanExampleBase::setupWindow(HINSTANCE hinstance, WNDPROC wndproc)
 		}
 	}
 
-	WNDCLASSEX wndClass;
+	WNDCLASSEXA wndClass;
 
-	wndClass.cbSize = sizeof(WNDCLASSEX);
+	wndClass.cbSize = sizeof(WNDCLASSEXA);
 	wndClass.style = CS_HREDRAW | CS_VREDRAW;
 	wndClass.lpfnWndProc = wndproc;
 	wndClass.cbClsExtra = 0;
@@ -918,7 +919,7 @@ HWND VulkanExampleBase::setupWindow(HINSTANCE hinstance, WNDPROC wndproc)
 	wndClass.lpszClassName = name.c_str();
 	wndClass.hIconSm = LoadIcon(NULL, IDI_WINLOGO);
 
-	if (!RegisterClassEx(&wndClass))
+	if (!RegisterClassExA(&wndClass))
 	{
 		std::cout << "Could not register window class!\n";
 		fflush(stdout);
@@ -942,7 +943,7 @@ HWND VulkanExampleBase::setupWindow(HINSTANCE hinstance, WNDPROC wndproc)
 		{
 			if (ChangeDisplaySettings(&dmScreenSettings, CDS_FULLSCREEN) != DISP_CHANGE_SUCCESSFUL)
 			{
-				if (MessageBox(NULL, "Fullscreen Mode not supported!\n Switch to window mode?", "Error", MB_YESNO | MB_ICONEXCLAMATION) == IDYES)
+				if (MessageBox(NULL, L"Fullscreen Mode not supported!\n Switch to window mode?", L"Error", MB_YESNO | MB_ICONEXCLAMATION) == IDYES)
 				{
 					fullscreen = FALSE;
 				}
@@ -978,7 +979,7 @@ HWND VulkanExampleBase::setupWindow(HINSTANCE hinstance, WNDPROC wndproc)
 	AdjustWindowRectEx(&windowRect, dwStyle, FALSE, dwExStyle);
 
 	std::string windowTitle = getWindowTitle();
-	window = CreateWindowEx(0,
+	window = CreateWindowExA(0,
 		name.c_str(),
 		windowTitle.c_str(),
 		dwStyle | WS_CLIPSIBLINGS | WS_CLIPCHILDREN,
